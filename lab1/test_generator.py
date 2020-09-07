@@ -13,7 +13,7 @@ def generate():
     dirName = r'B:\VisualStudio\source\lab1\lab1'
     path = os.path.join(dirName, 'array')
     with open(dirName, 'w') as f:
-        for i in in range(len(vec)):
+        for i in range(len(vec)):
             if i != len(vec) - 1:
                 f.write(str(vec[i]) + '\n')
             else:
@@ -22,7 +22,7 @@ def generate():
     vec.reverse()
     path = os.path.join(dirName, 'answer')
     with open(dirName, 'w') as f:
-    for i in in range(len(vec)):
+    for i in range(len(vec)):
         if i != len(vec) - 1:
             f.write(str(vec[i]) + '\n')
         else:
