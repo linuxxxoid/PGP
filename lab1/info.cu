@@ -13,10 +13,10 @@ int main()
       printf("  totalGlobalMem: %lu\n", prop.totalGlobalMem);
       printf(" Const Mem : %lu\n", prop.totalConstMem);
       printf("Max shared mem for blocks %lu\n", prop.sharedMemPerBlock);
-      printf("max regs per block %lu\n", prop.regsPerBlock);
-      printf("Max thread per block %lu\n", prop.maxThreadsPerBlock);
-      printf("multiProcessorCount : %lu\n", prop.multiProcessorCount);
-      printf("maxThreadsDim %lu %lu %lu\n", prop.maxThreadsDim[0], prop.maxThreadsDim[1], prop.maxThreadsDim[2]);
-      printf("maxGridSize %lu %lu %lu\n", prop.maxGridSize[0], prop.maxGridSize[1], prop.maxGridSize[2]);
+      printf("max regs per block %d\n", prop.regsPerBlock);
+      printf("Max thread per block %d\n", prop.maxThreadsPerBlock);
+      printf("multiProcessorCount : %d\n", prop.multiProcessorCount);
+      printf("maxThreadsDim %lu %lu %d\n", prop.maxThreadsDim[0], prop.maxThreadsDim[1], prop.maxThreadsDim[2]);
+      printf("maxGridSize %d %d %d\n", prop.maxGridSize[0], prop.maxGridSize[1], prop.maxGridSize[2]);
     }
 }
