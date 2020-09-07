@@ -16,7 +16,7 @@ int main()
       printf("max regs per block %d\n", prop.regsPerBlock);
       printf("Max thread per block %d\n", prop.maxThreadsPerBlock);
       printf("multiProcessorCount : %d\n", prop.multiProcessorCount);
-      printf("maxThreadsDim %lu %d %d\n", prop.maxThreadsDim[0], prop.maxThreadsDim[1], prop.maxThreadsDim[2]);
+      printf("maxThreadsDim %d %d %d\n", prop.maxThreadsDim[0], prop.maxThreadsDim[1], prop.maxThreadsDim[2]);
       printf("maxGridSize %d %d %d\n", prop.maxGridSize[0], prop.maxGridSize[1], prop.maxGridSize[2]);
     }
 }
