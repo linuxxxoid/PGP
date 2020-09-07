@@ -28,6 +28,7 @@ int main(int argc, const char* argv[])
     int size;
     std::cin >> size;
     //scanf("%lli", &size); 
+    std::cout << "size=" << size;
     const int MAX = 33554432;
     const int MIN = 0;
     if (size < MIN && size > MAX)
@@ -45,6 +46,13 @@ int main(int argc, const char* argv[])
         hostVec[i] = i;
         //std::cout << hostVec[i] << '\t';
     }
+    std::cout << "WHAT WE HAVE\n";
+    for (int i = 0; i < size; ++i)
+    {
+       std::cout << hostVec[i] << ' ';
+    }
+    std::cout << std::endl;
+    std::cout << "WHAT WE HAVE\n";
 
     double *deviceVec, *deviceRes;
 
