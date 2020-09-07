@@ -19,7 +19,8 @@ __global__ void Reverse(double* res, double* vec, int size)
 {
     int idx = blockDim.x * blockIdx.x + threadIdx.x;
     if (idx >= size) return;
-    int offset = gridDim.x * blockDim.x - 1 - idx;
+    //int offset = gridDim.x * blockDim.x - 1 - idx;
+    int offset = size - 1 - idx;
     res[idx] = vec[offset];
 }
 
