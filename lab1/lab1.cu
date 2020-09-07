@@ -61,7 +61,7 @@ int main(int argc, const char* argv[])
     }
    
     // Запускаем kernel
-    Reverse<<<blockCount, maxThreads>>>(deviceRes, deviceVec);
+    Reverse<<<blockCount, maxThreads>>>(deviceRes, deviceVec, size);
 
     checkCudaError("Kernel invocation");
     cudaMemcpy(hostVec, deviceRes, sizeof(double) * size, cudaMemcpyDeviceToHost);
