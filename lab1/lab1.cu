@@ -43,7 +43,6 @@ int main(int argc, const char* argv[])
     {
         //scanf("lf", &hostVec[i]);
         std::cin >> hostVec[i];
-        hostVec[i] = i;
         //std::cout << hostVec[i] << '\t';
     }
     std::cout << "WHAT WE HAVE\n";
