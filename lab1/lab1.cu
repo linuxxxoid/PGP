@@ -52,7 +52,7 @@ int main(int argc, const char* argv[])
     // Копируем ввод на device
     cudaMemcpy(deviceVec, hostVec, sizeof(double) * size, cudaMemcpyHostToDevice);
     
-    const int maxThreads = 1024
+    const int maxThreads = 1024;
     int blockCount = size / maxThreads;
     
     if (blockCount * maxThreads != size) 
