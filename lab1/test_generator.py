@@ -22,12 +22,12 @@ def generate():
     vec.reverse()
     path = os.path.join(dirName, 'answer')
     with open(dirName, 'w') as f:
-    for i in range(len(vec)):
-        if i != len(vec) - 1:
-            f.write(str(vec[i]) + '\n')
-        else:
-            f.write(str(vec[i]))
-    # =======================
+        for i in range(len(vec)):
+            if i != len(vec) - 1:
+                f.write(str(vec[i]) + '\n')
+            else:
+                f.write(str(vec[i]))
 
+                
 if __name__ == "__main__":
     generate()
