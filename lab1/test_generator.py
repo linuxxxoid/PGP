@@ -13,12 +13,20 @@ def generate():
     dirName = r'B:\VisualStudio\source\lab1\lab1'
     path = os.path.join(dirName, 'array')
     with open(dirName, 'w') as f:
-        f.write(vec)
-    
+        for i in in range(len(vec)):
+            if i != len(vec) - 1:
+                f.write(str(vec[i]) + '\n')
+            else:
+                f.write(str(vec[i]))
+                
     vec.reverse()
     path = os.path.join(dirName, 'answer')
-    with open(path, 'w') as f:
-            f.write(vec)
+    with open(dirName, 'w') as f:
+    for i in in range(len(vec)):
+        if i != len(vec) - 1:
+            f.write(str(vec[i]) + '\n')
+        else:
+            f.write(str(vec[i]))
     # =======================
 
 if __name__ == "__main__":
