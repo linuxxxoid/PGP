@@ -37,7 +37,7 @@ int main(int argc, const char* argv[])
        exit(0);
     }
 
-    double* hostVec = new double[size];
+    double *hostVec = new double[size];
 
     for (int i = 0; i < size; ++i)
     {
