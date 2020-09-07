@@ -75,10 +75,14 @@ int main(int argc, const char* argv[])
     std::cout.setf(std::ios::scientific);
     for (int i = 0; i < size; ++i)
     {
-       std::cout << hostVec[i] << ' ';
-    }
-    std::cout << std::endl;
+        std::cout << std::fixed << std::scientific;
+        std::cout << std::setprecision(accuracy) << hostVec[i];
 
+        if (i < size - 1)
+            std::cout << " ";
+        else
+            std::cout << std::endl;
+    }
     cudaFree(deviceVec);
     cudaFree(deviceRes);
     delete[] hostVec;
