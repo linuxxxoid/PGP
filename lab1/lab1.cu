@@ -71,13 +71,9 @@ int main(int argc, const char* argv[])
     checkCudaError("Memcpy");
 
     int accuracy = 10;
-    std::cout.precision(accuracy);
-    std::cout.setf(std::ios::scientific);
     for (int i = 0; i < size; ++i)
     {
-        std::cout << std::fixed << std::scientific;
-        std::cout << std::setprecision(accuracy) << hostVec[i];
-
+        std::cout << std::scientific << std::setprecision(accuracy) << hostVec[i];
         if (i < size - 1)
             std::cout << " ";
         else
