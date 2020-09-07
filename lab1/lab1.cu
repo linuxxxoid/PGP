@@ -26,7 +26,8 @@ __global__ void Reverse(double* res, double* vec)
 int main(int argc, const char* argv[])
 {
     int size;
-    scanf("%lli", &size); 
+    std::cin >> size;
+    //scanf("%lli", &size); 
     const int MAX = 33554432;
     const int MIN = 0;
     if (size < MIN && size > MAX)
@@ -39,8 +40,8 @@ int main(int argc, const char* argv[])
 
     for (int i = 0; i < size; ++i)
     {
-        scanf("lf", &hostVec[i]);
-        //std::cin >> hostVec[i];
+        //scanf("lf", &hostVec[i]);
+        std::cin >> hostVec[i];
         hostVec[i] = i;
         //std::cout << hostVec[i] << '\t';
     }
