@@ -15,9 +15,10 @@ void checkCudaError(const char* msg)
 }
 
 
-__global__ void Reverse(double* res, double* vec)
+__global__ void Reverse(double* res, double* vec, int size)
 {
     int idx = blockDim.x * blockIdx.x + threadIdx.x;
+    if (idx >= size) return;
     int offset = gridDim.x * blockDim.x - 1 - idx;
     res[idx] = vec[offset];
 }
@@ -27,8 +28,7 @@ int main(int argc, const char* argv[])
 {
     int size;
     std::cin >> size;
-    //scanf("%lli", &size); 
-    std::cout << "size=" << size;
+    
     const int MAX = 33554432;
     const int MIN = 0;
     if (size < MIN && size > MAX)
@@ -41,7 +41,6 @@ int main(int argc, const char* argv[])
 
     for (int i = 0; i < size; ++i)
     {
-        //scanf("lf", &hostVec[i]);
         std::cin >> hostVec[i];
     }
 
@@ -52,11 +51,17 @@ int main(int argc, const char* argv[])
     cudaMalloc((void**) &deviceRes, sizeof(double) * size);
     // Копируем ввод на device
     cudaMemcpy(deviceVec, hostVec, sizeof(double) * size, cudaMemcpyHostToDevice);
-
-    int nBlockCount = 1;
-    int nThreadCount = size;
+    
+    const int maxThreads = 1024
+    int blockCount = size / maxThreads;
+    
+    if (blockCount * maxThreads != size) 
+    {
+        ++blockCount; 
+    }
+   
     // Запускаем kernel
-    Reverse<<<nBlockCount, nThreadCount>>>(deviceRes, deviceVec);
+    Reverse<<<blockCount, maxThreads>>>(deviceRes, deviceVec);
 
     checkCudaError("Kernel invocation");
     cudaMemcpy(hostVec, deviceRes, sizeof(double) * size, cudaMemcpyDeviceToHost);
