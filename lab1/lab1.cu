@@ -43,15 +43,7 @@ int main(int argc, const char* argv[])
     {
         //scanf("lf", &hostVec[i]);
         std::cin >> hostVec[i];
-        //std::cout << hostVec[i] << '\t';
     }
-    std::cout << "WHAT WE HAVE\n";
-    for (int i = 0; i < size; ++i)
-    {
-       std::cout << hostVec[i] << ' ';
-    }
-    std::cout << std::endl;
-    std::cout << "WHAT WE HAVE\n";
 
     double *deviceVec, *deviceRes;
 
@@ -70,7 +62,7 @@ int main(int argc, const char* argv[])
     cudaMemcpy(hostVec, deviceRes, sizeof(double) * size, cudaMemcpyDeviceToHost);
     checkCudaError("Memcpy");
 
-    int accuracy = 10;
+    const int accuracy = 10;
     for (int i = 0; i < size; ++i)
     {
         std::cout << std::scientific << std::setprecision(accuracy) << hostVec[i];
