@@ -54,14 +54,21 @@ int main(int argc, const char* argv[])
     
     const int maxThreads = 1024;
     int blockCount = size / maxThreads;
-    
+    int threadsCount;
     if (blockCount * maxThreads != size) 
     {
         ++blockCount; 
     }
-   
+    if (size < maxThreads)
+    {
+        threadsCount = size;
+    }
+    else
+    {
+        threadsCount = maxThreads;    
+    }
     // Запускаем kernel
-    Reverse<<<blockCount, maxThreads>>>(deviceRes, deviceVec, size);
+    Reverse<<<blockCount, threadsCount>>>(deviceRes, deviceVec, size);
 
     checkCudaError("Kernel invocation");
     cudaMemcpy(hostVec, deviceRes, sizeof(double) * size, cudaMemcpyDeviceToHost);
