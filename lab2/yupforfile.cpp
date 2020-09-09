@@ -5,7 +5,7 @@
 
 int main(int argc, const char* argv[])
 {	
-	std::string input = 'https://github.com/linuxxxoid/PGP/tree/master/lab2/test';
+	std::string input = "https://github.com/linuxxxoid/PGP/tree/master/lab2/test";
 	std::string output;
 	int widthNew = 2;
 	int heightNew = 2;
