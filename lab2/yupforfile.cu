@@ -27,7 +27,7 @@ int main(int argc, const char* argv[])
 		}
 		//fread(&height, 1, sizeof(int), file);
 		printf("%i %i\n", width, height);
-		pixels = new uchar4[width * height];
+		uchar4 *pixels = new uchar4[width * height];
 		fread(pixels, sizeof(uchar4), width * height, file);
 
 		fclose(file);
