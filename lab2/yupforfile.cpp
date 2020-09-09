@@ -5,9 +5,11 @@
 
 int main(int argc, const char* argv[])
 {	
-	std::string input, output;
-	int widthNew, heightNew;
-	std::cin >> input >> output >> widthNew >> heightNew;
+	std::string input = 'https://github.com/linuxxxoid/PGP/tree/master/lab2/test';
+	std::string output;
+	int widthNew = 2;
+	int heightNew = 2;
+	
 
 	FILE* file;
 	if ((file = fopen(input.c_str(), "rb")) == NULL)
