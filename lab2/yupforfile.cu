@@ -9,13 +9,13 @@ int main(int argc, const char* argv[])
 	std::string output;
 	int widthNew = 2;
 	int heightNew = 2;
-	
+	int width, height;
 
 	FILE* file;
 	if ((file = fopen(input.c_str(), "rb")) == NULL)
 	{
 		std::cerr << "ERROR: something wrong with opening the file!\n";
-		exit(0)
+		exit(0);
 	}
 	else
 	{
