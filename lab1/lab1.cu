@@ -15,12 +15,11 @@ void checkCudaError(const char* msg)
 }
 
 
-__global__ void Reverse(double* res, double* vec, int size)
+__global__ void Reverse(float* res, float* vec, int size)
 {
     int idx = blockDim.x * blockIdx.x + threadIdx.x;
     if (idx >= size) return;
-    //int offset = gridDim.x * blockDim.x - 1 - idx;
-    int offset = size - 1 - idx;
+    int offset = size - idx - 1;
     res[idx] = vec[offset];
 }
 
@@ -38,41 +37,38 @@ int main(int argc, const char* argv[])
        exit(0);
     }
 
-    double *hostVec = new double[size];
+    float *hostVec = new float[size];
 
     for (int i = 0; i < size; ++i)
     {
         std::cin >> hostVec[i];
     }
 
-    double *deviceVec, *deviceRes;
+    float *deviceVec, *deviceRes;
 
     // Выделяем память для device копий
-    cudaMalloc((void**) &deviceVec, sizeof(double) * size);
-    cudaMalloc((void**) &deviceRes, sizeof(double) * size);
+    cudaMalloc((void**) &deviceVec, sizeof(float) * size);
+    cudaMalloc((void**) &deviceRes, sizeof(float) * size);
     // Копируем ввод на device
-    cudaMemcpy(deviceVec, hostVec, sizeof(double) * size, cudaMemcpyHostToDevice);
+    cudaMemcpy(deviceVec, hostVec, sizeof(float) * size, cudaMemcpyHostToDevice);
     
     const int maxThreads = 1024;
     int blockCount = size / maxThreads;
     int threadsCount;
+    
     if (blockCount * maxThreads != size) 
-    {
         ++blockCount; 
-    }
+
     if (size < maxThreads)
-    {
         threadsCount = size;
-    }
     else
-    {
         threadsCount = maxThreads;    
-    }
+    
     // Запускаем kernel
     Reverse<<<blockCount, threadsCount>>>(deviceRes, deviceVec, size);
-
     checkCudaError("Kernel invocation");
-    cudaMemcpy(hostVec, deviceRes, sizeof(double) * size, cudaMemcpyDeviceToHost);
+    
+    cudaMemcpy(hostVec, deviceRes, sizeof(float) * size, cudaMemcpyDeviceToHost);
     checkCudaError("Memcpy");
 
     const int accuracy = 10;
@@ -85,7 +81,11 @@ int main(int argc, const char* argv[])
             std::cout << std::endl;
     }
     cudaFree(deviceVec);
+    checkCudaError("Free");
+    
     cudaFree(deviceRes);
+    checkCudaError("Free");
+    
     delete[] hostVec;
 
     return 0;
