@@ -138,8 +138,7 @@ int main(int argc, const char* argv[])
 
 	cudaMemcpy(pixels, deviceRes, sizeof(uchar4) * widthNew * heightNew, cudaMemcpyDeviceToHost);
 	checkCudaError("Memcpy");
-
-	FILE* file;
+	
 	if ((file = fopen(output.c_str(), "wb")) == NULL)
 	{
 		std::cerr << "ERROR: something wrong with opening the file!";
@@ -161,7 +160,7 @@ int main(int argc, const char* argv[])
 	cudaFreeArray(array);
 	checkCudaError("Free");
 	
-	cudaFreeArray(deviceRes);
+	cudaFree(deviceRes);
 	checkCudaError("Free");
 
 	delete[] pixels;
