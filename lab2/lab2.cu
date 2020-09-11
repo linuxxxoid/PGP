@@ -67,14 +67,15 @@ __global__ void SSAA(uchar4 *colorPixels, int width, int height, int proportionW
 int main(int argc, const char* argv[])
 {	
 	std::string input, output;
-	int widthNew, heightNew;
+	int widthNew, heightNew, width, height;
+	uchar4 *pixels;
 	std::cin >> input >> output >> widthNew >> heightNew;
 
 	FILE* file;
 	if ((file = fopen(input.c_str(), "rb")) == NULL)
 	{
 		std::cerr << "ERROR: something wrong with opening the file!\n";
-		exit(0)
+		exit(0);
 	}
 	else
 	{
@@ -105,8 +106,8 @@ int main(int argc, const char* argv[])
 	checkCudaError("Memcpy array");
 
 	// set texture parameters
-	Texture2D.addresMode[0] = cudaAdressModeWrap;
-	Texture2D.addresMode[1] = cudaAdressModeWrap;
+	Texture2D.addressMode[0] = cudaAddressModeWrap;
+	Texture2D.addressMode[1] = cudaAddressModeWrap;
 	Texture2D.filterMode = cudaFilterModeLinear;
 	Texture2D.normalized = false; // access with normalized texture coordinates
 
@@ -142,7 +143,7 @@ int main(int argc, const char* argv[])
 	if ((file = fopen(output.c_str(), "wb")) == NULL)
 	{
 		std::cerr << "ERROR: something wrong with opening the file!";
-		exit(0)
+		exit(0);
 	}
 	else
 	{
