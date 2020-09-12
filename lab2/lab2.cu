@@ -82,6 +82,7 @@ int main(int argc, const char* argv[])
 	{
 		fread(&width, sizeof(int), 1, file);
 		fread(&height, sizeof(int), 1, file);
+        printf("%i %i\n", width, height);
 		if (width >= 65536 || width < 0 || height < 0 || height >= 65536)
 		{
 			std::cerr << "ERROR: incorrect input.\n";
@@ -144,7 +145,7 @@ int main(int argc, const char* argv[])
 	if ((file = fopen(output.c_str(), "wb")) == NULL)
 	{
 		std::cerr << "ERROR: something wrong with opening the file.";
-		exit(0);
+        exit(0);
 	}
 	else
 	{
