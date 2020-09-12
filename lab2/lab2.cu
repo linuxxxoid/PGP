@@ -33,7 +33,7 @@ __global__ void SSAA(uchar4 *colorPixels, int width, int height, int proportionW
 	 
 	 colorPixels - the final color of the pixel,
 	 numSample - the number of samples per pixel,
-	 sample_i - color of the i-th sample.
+	 colorSample_i - color of the i-th sample.
 	*/
 
 	for (int col = xId; col < width; col += xOffset)
@@ -57,6 +57,7 @@ __global__ void SSAA(uchar4 *colorPixels, int width, int height, int proportionW
 			colorSample.x /= numSample; 
 			colorSample.y /= numSample;
 			colorSample.z /= numSample;
+            // Write to global memory
 			colorPixels[col + row * width] = make_uchar4(colorSample.x, colorSample.y, colorSample.z, 0);
 		}
 	}
@@ -74,8 +75,8 @@ int main(int argc, const char* argv[])
 	FILE* file;
 	if ((file = fopen(input.c_str(), "rb")) == NULL)
 	{
-		std::cerr << "ERROR: something wrong with opening the file!\n";
-		exit(0);
+	    std::cerr << "ERROR: something wrong with opening the file!\n";
+        exit(0);
 	}
 	else
 	{
@@ -96,6 +97,7 @@ int main(int argc, const char* argv[])
 	int proportionWidth = width / widthNew;
 	int proportionHeight = height / heightNew;
 
+    // Allocate CUDA array in device memory
 	cudaChannelFormatDesc channelDesc = cudaCreateChannelDesc<uchar4>();
 	cudaArray *array;
 
@@ -106,8 +108,8 @@ int main(int argc, const char* argv[])
 	checkCudaError("Memcpy array");
 
 	// set texture parameters
-	Texture2D.addressMode[0] = cudaAddressModeWrap;
-	Texture2D.addressMode[1] = cudaAddressModeWrap;
+	Texture2D.addressMode[0] = cudaAddressModeClamp;
+	Texture2D.addressMode[1] = cudaAddressModeClamp;
 	Texture2D.filterMode = cudaFilterModeLinear;
 	Texture2D.normalized = false; // access with normalized texture coordinates
 
