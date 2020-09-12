@@ -24,7 +24,7 @@ __global__ void SSAA(uchar4 *colorPixels, int width, int height, int proportionW
 	int yId = blockDim.y * blockIdx.y + threadIdx.y;
 	int xOffset = blockDim.x * gridDim.x;
 	int yOffset = blockDim.y * gridDim.y;
-	int numSample = proportionWidth * proportionHeight ;
+	int numSample = proportionWidth * proportionHeight;
 
 	/*
 	colorPixels = colorSample_0 + colorSample_1 + ... + colorSample_n-1   SUM(colorSample_i)
@@ -84,7 +84,7 @@ int main(int argc, const char* argv[])
 		fread(&height, sizeof(int), 1, file);
 		if (width >= 65536 || width < 0 || height < 0 || height >= 65536)
 		{
-			std::cerr << "ERROR: incorrect input!\n";
+			std::cerr << "ERROR: incorrect input.\n";
 		}
 		//fread(&height, 1, sizeof(int), file);
 		printf("%i %i\n", width, height);
@@ -143,7 +143,7 @@ int main(int argc, const char* argv[])
 	
 	if ((file = fopen(output.c_str(), "wb")) == NULL)
 	{
-		std::cerr << "ERROR: something wrong with opening the file!";
+		std::cerr << "ERROR: something wrong with opening the file.";
 		exit(0);
 	}
 	else
