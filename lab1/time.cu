@@ -113,10 +113,10 @@ int main(int argc, const char* argv[])
     checkCudaError("Memcpy");
 
     const int accuracy = 10;
-    for (int i = 0; i < size - 1; ++i)
-    {
+    //for (int i = 0; i < size - 1; ++i)
+    //{
         //std::cout << std::scientific << std::setprecision(accuracy) << hostVec[i] << " ";
-    }
+    //}
     //std::cout << std::scientific << std::setprecision(accuracy) << hostVec[size - 1];
     
     cudaFree(deviceVec);
