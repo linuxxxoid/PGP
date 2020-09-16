@@ -57,7 +57,7 @@ int main(int argc, const char* argv[])
     CustomReverse(hostVec, size);
     time = clock() - time;
     std::cout << "CPU" << std::endl;
-    std::cout << "time = "(double)time/CLOCKS_PER_SEC << std::endl;
+    std::cout << "time = " << (double)time/CLOCKS_PER_SEC << std::endl;
 
 
     float *deviceVec, *deviceRes;
@@ -112,7 +112,7 @@ int main(int argc, const char* argv[])
     cudaMemcpy(hostVec, deviceRes, sizeof(float) * size, cudaMemcpyDeviceToHost);
     checkCudaError("Memcpy");
 
-    const int accuracy = 10;
+    //const int accuracy = 10;
     //for (int i = 0; i < size - 1; ++i)
     //{
         //std::cout << std::scientific << std::setprecision(accuracy) << hostVec[i] << " ";
