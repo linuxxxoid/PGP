@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <ctime>
 
 void checkCudaError(const char* msg)
 {
