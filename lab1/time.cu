@@ -14,6 +14,12 @@ void checkCudaError(const char* msg)
     }
 }
 
+void CustomReverse(float* vec, int size) {
+    float* res = new float[size];
+    for (int i = 0; i < size; ++i) {
+        res[i] = vec[size - i - 1];
+    }
+}
 
 __global__ void Reverse(float* res, float* vec, int size)
 {
@@ -43,6 +49,16 @@ int main(int argc, const char* argv[])
     {
         hostVec[i] = i;
     }
+    std::cout << "vector size = " << size << std::endl;
+"
+    clock_t time;
+    time = clock();
+    
+    CustomReverse(hostVec, size);
+    time = clock() - time;
+    std::cout << "CPU" << std::endl;
+    std::cout << "time = "(double)time/CLOCKS_PER_SEC << std::endl;
+
 
     float *deviceVec, *deviceRes;
 
@@ -89,8 +105,10 @@ int main(int argc, const char* argv[])
     checkCudaError("cudaEventDestroy");
     cudaEventDestroy(end);
     checkCudaError("cudaEventDestroy");
+    printf("GPU\n");
     printf("time = %f\n", t);
-
+    printf("blocks = %d\n", blockCount);
+    printf("threads = %d\n", threadsCount);
     cudaMemcpy(hostVec, deviceRes, sizeof(float) * size, cudaMemcpyDeviceToHost);
     checkCudaError("Memcpy");
 
@@ -99,7 +117,7 @@ int main(int argc, const char* argv[])
     {
         //std::cout << std::scientific << std::setprecision(accuracy) << hostVec[i] << " ";
     }
-    std::cout << std::scientific << std::setprecision(accuracy) << hostVec[size - 1];
+    //std::cout << std::scientific << std::setprecision(accuracy) << hostVec[size - 1];
     
     cudaFree(deviceVec);
     checkCudaError("Free");
