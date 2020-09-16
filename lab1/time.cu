@@ -50,7 +50,7 @@ int main(int argc, const char* argv[])
         hostVec[i] = i;
     }
     std::cout << "vector size = " << size << std::endl;
-"
+
     clock_t time;
     time = clock();
     
