@@ -23,7 +23,7 @@ __global__ void Reverse(float* res, float* vec, int size)
     while (idx < size)
     {
 	    res[idx] = vec[size - idx - 1];
-	    idx += offset
+	    idx += offset;
     }
 }
 
@@ -52,14 +52,14 @@ int main(int argc, const char* argv[])
 
     // Выделяем память для device копий
     cudaMalloc((void**) &deviceVec, sizeof(float) * size);
-    checkCudaError("Malloc")
+    checkCudaError("Malloc");
 
     cudaMalloc((void**) &deviceRes, sizeof(float) * size);
-    checkCudaError("Malloc")
+    checkCudaError("Malloc");
 
     // Копируем ввод на device
     cudaMemcpy(deviceVec, hostVec, sizeof(float) * size, cudaMemcpyHostToDevice);
-    checkCudaError("Memcpy")
+    checkCudaError("Memcpy");
     
     int blockCount = 256;
     int threadsCount = 256;   
