@@ -82,13 +82,10 @@ int main(int argc, const char* argv[])
 	{
 		fread(&width, sizeof(int), 1, file);
 		fread(&height, sizeof(int), 1, file);
-        printf("%i %i\n", width, height);
 		if (width >= 65536 || width < 0 || height < 0 || height >= 65536)
 		{
 			std::cerr << "ERROR: incorrect input.\n";
 		}
-		//fread(&height, 1, sizeof(int), file);
-		printf("%i %i\n", width, height);
 		pixels = new uchar4[width * height];
 		fread(pixels, sizeof(uchar4), width * height, file);
 
@@ -111,7 +108,7 @@ int main(int argc, const char* argv[])
 	// set texture parameters
 	Texture2D.addressMode[0] = cudaAddressModeClamp;
 	Texture2D.addressMode[1] = cudaAddressModeClamp;
-	Texture2D.filterMode = cudaFilterModeLinear;
+	Texture2D.filterMode = cudaFilterModePoint;;
 	Texture2D.normalized = false; // access with normalized texture coordinates
 
 	// Bind the array to the texture
@@ -123,8 +120,8 @@ int main(int argc, const char* argv[])
 	checkCudaError("Malloc");
 
 
-    int xThreadCount = 16
-    int yThreadCount = 16
+    int xThreadCount = 16;
+    int yThreadCount = 16;
 
 	int xBlockCount = 16;
 	int yBlockCount = 16;
