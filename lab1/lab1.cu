@@ -18,9 +18,13 @@ void checkCudaError(const char* msg)
 __global__ void Reverse(float* res, float* vec, int size)
 {
     int idx = blockDim.x * blockIdx.x + threadIdx.x;
-    if (idx >= size) return;
-    int offset = size - idx - 1;
-    res[idx] = vec[offset];
+    int offset = gridDim.x * blockDim.x;
+
+    while (idx < size)
+    {
+	    res[idx] = vec[size - idx - 1];
+	    idx += offset
+    }
 }
 
 
@@ -48,21 +52,17 @@ int main(int argc, const char* argv[])
 
     // Выделяем память для device копий
     cudaMalloc((void**) &deviceVec, sizeof(float) * size);
+    checkCudaError("Malloc")
+
     cudaMalloc((void**) &deviceRes, sizeof(float) * size);
+    checkCudaError("Malloc")
+
     // Копируем ввод на device
     cudaMemcpy(deviceVec, hostVec, sizeof(float) * size, cudaMemcpyHostToDevice);
+    checkCudaError("Memcpy")
     
-    const int maxThreads = 1024;
-    int blockCount = size / maxThreads;
-    int threadsCount;
-    
-    if (blockCount * maxThreads != size) 
-        ++blockCount; 
-
-    if (size < maxThreads)
-        threadsCount = size;
-    else
-        threadsCount = maxThreads;    
+    int blockCount = 256;
+    int threadsCount = 256;   
     
     // Запускаем kernel
     Reverse<<<blockCount, threadsCount>>>(deviceRes, deviceVec, size);
