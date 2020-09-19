@@ -122,19 +122,16 @@ int main(int argc, const char* argv[])
 	cudaMalloc(&deviceRes, sizeof(uchar4) * widthNew * heightNew);
 	checkCudaError("Malloc");
 
-	// Max quantity of threads is 1024 in one block => sqrt(1024) = 32 is dim
-    const int maxThreads = 1024;
-	dim3 threadsCount = dim3(sqrt(maxThreads), sqrt(maxThreads));
 
-	int xBlockCount = width / maxThreads;
-	int yBlockCount =  height / maxThreads;
+    int xThreadCount = 16
+    int yThreadCount = 16
 
-	if (xBlockCount * maxThreads != width)
-		++xBlockCount;
-	if (yBlockCount * maxThreads != height)
-		++yBlockCount;
+	int xBlockCount = 16;
+	int yBlockCount = 16;
+
  
     dim3 blockCount = dim3(xBlockCount, yBlockCount);
+    dim3 threadsCount = dim3(xThreadCount, yThreadCount);
 
 	SSAA<<<blockCount, threadsCount>>>(deviceRes, widthNew, heightNew, proportionWidth, proportionHeight);
 	checkCudaError("Kernel invocation");
