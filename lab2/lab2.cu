@@ -85,6 +85,7 @@ int main(int argc, const char* argv[])
 		if (width >= 65536 || width < 0 || height < 0 || height >= 65536)
 		{
 			std::cerr << "ERROR: incorrect input.\n";
+			exit(0);
 		}
 		pixels = new uchar4[width * height];
 		fread(pixels, sizeof(uchar4), width * height, file);
@@ -108,6 +109,7 @@ int main(int argc, const char* argv[])
 	// set texture parameters
 	Texture2D.addressMode[0] = cudaAddressModeClamp;
 	Texture2D.addressMode[1] = cudaAddressModeClamp;
+	Texture2D.channelDesc = channelDesc;
 	Texture2D.filterMode = cudaFilterModePoint;;
 	Texture2D.normalized = false; // access with normalized texture coordinates
 
@@ -143,9 +145,9 @@ int main(int argc, const char* argv[])
 	}
 	else
 	{
-		fwrite(&width, sizeof(int), 1, file);
-		fwrite(&height, sizeof(int), 1, file);
-		fwrite(pixels, sizeof(uchar4), width * height, file);
+		fwrite(&widthNew, sizeof(int), 1, file);
+		fwrite(&heightNew, sizeof(int), 1, file);
+		fwrite(pixels, sizeof(uchar4), widthNew * heightNew, file);
 
 		fclose(file);
 	}

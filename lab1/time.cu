@@ -24,9 +24,13 @@ void CustomReverse(float* vec, int size) {
 __global__ void Reverse(float* res, float* vec, int size)
 {
     int idx = blockDim.x * blockIdx.x + threadIdx.x;
-    if (idx >= size) return;
-    int offset = size - idx - 1;
-    res[idx] = vec[offset];
+    int offset = gridDim.x * blockDim.x;
+
+    while (idx < size)
+    {
+	    res[idx] = vec[size - idx - 1];
+	    idx += offset;
+    }
 }
 
 
@@ -67,19 +71,12 @@ int main(int argc, const char* argv[])
     cudaMalloc((void**) &deviceRes, sizeof(float) * size);
     // Копируем ввод на device
     cudaMemcpy(deviceVec, hostVec, sizeof(float) * size, cudaMemcpyHostToDevice);
+     
     
-    const int maxThreads = 1024;
-    int blockCount = size / maxThreads;
-    int threadsCount;
+	int blockCount = 32;
+    int threadsCount = 32;   
     
-    if (blockCount * maxThreads != size) 
-        ++blockCount; 
 
-    if (size < maxThreads)
-        threadsCount = size;
-    else
-        threadsCount = maxThreads;    
-    
 
     cudaEvent_t start, end;
     cudaEventCreate(&start);
